@@ -3,7 +3,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Main class to demonstrate the functionality of the Content and ContentManager classes.
+ * Main class to demonstrate the functionality of the Content and ContentManager
+ * classes.
  */
 public class Main {
 
@@ -18,57 +19,65 @@ public class Main {
         // Loop for menu options
         while (true) {
             try {
-                // Display menu
-                System.out.println("Content Manager Menu:");
-                System.out.println("1. Add Content");
-                System.out.println("2. Edit Content");
-                System.out.println("3. Delete Content");
-                System.out.println("4. List Contents");
-                System.out.println("5. Exit");
+                               // Display menu
+                LOGGER.info(String.format("%-10s %s", "1.", "Add Content"));
+                LOGGER.info(String.format("%-10s %s", "2.", "Edit Content"));
+                LOGGER.info(String.format("%-10s %s", "3.", "Delete Content"));  
+                LOGGER.info(String.format("%-10s %s", "4.", "List Contents"));
+                LOGGER.info(String.format("%-10s %s", "5.", "Exit"));
+
+                // Input validation for user choice
+                while (!scanner.hasNextInt()) {
+                    LOGGER.info("Must enter a valid number from the list.");
+                    scanner.next(); // Clear invalid input
+                    LOGGER.info("Enter your choice: ");
+                }
 
                 // Get user choice
-                System.out.print("Enter your choice: ");
+                LOGGER.info("Enter your choice: ");
                 int choice = scanner.nextInt();
-                scanner.nextLine();  // Consume newline
+                if (choice == 5)
+                    break; // Exit condition to break the loop
+                scanner.nextLine(); // Consume newline
 
                 // Perform actions based on user choice
                 switch (choice) {
                     case 1:
                         // Add content
-                        System.out.print("Enter title: ");
+                        LOGGER.info("Enter title: ");
                         String title = scanner.nextLine();
-                        System.out.print("Enter text content: ");
+                        LOGGER.info("Enter text content: ");
                         String textContent = scanner.nextLine();
-                        System.out.print("Enter author: ");
+                        LOGGER.info("Enter author: ");
                         String author = scanner.nextLine();
                         Content content = new Content(title, textContent, author);
                         contentManager.addContent(content);
-                        System.out.println("Content added successfully.");
+                        LOGGER.info("Content added successfully.");
                         break;
 
                     case 2:
                         // Edit content
-                        System.out.print("Enter index of content to edit: ");
+                        LOGGER.info("Enter index of content to edit: ");
                         int indexToEdit = scanner.nextInt();
-                        scanner.nextLine();  // Consume newline
-                        System.out.print("Enter new title: ");
+                        scanner.nextLine(); // Consume newline
+                        LOGGER.info("Enter new title: ");
                         String newTitle = scanner.nextLine();
-                        System.out.print("Enter new text content: ");
+                        LOGGER.info("Enter new text content: ");
                         String newTextContent = scanner.nextLine();
-                        System.out.print("Enter new author: ");
+                        LOGGER.info("Enter new author: ");
                         String newAuthor = scanner.nextLine();
                         Content newContent = new Content(newTitle, newTextContent, newAuthor);
                         contentManager.editContent(indexToEdit, newContent);
-                        System.out.println("Content edited successfully.");
+                        LOGGER.info("Content edited successfully.");
                         break;
 
                     case 3:
                         // Delete content
-                        System.out.print("Enter index of content to delete: ");
+                        LOGGER.info("Enter index of content to delete: ");
                         int indexToDelete = scanner.nextInt();
-                        scanner.nextLine();  // Consume newline
+                        scanner.nextLine(); // Consume newline
                         contentManager.deleteContent(indexToDelete);
-                        System.out.println("Content deleted successfully.");
+                        LOGGER.info("Content deleted successfully.");
                         break;
 
                     case 4:
@@ -76,13 +85,8 @@ public class Main {
                         contentManager.listContents();
                         break;
 
-                    case 5:
-                        // Exit
-                        scanner.close();
-                        return;
-
                     default:
-                        System.out.println("Invalid choice. Please try again.");
+                        LOGGER.info("Invalid choice. Please try again.");
                 }
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "Exception occurred", e);
